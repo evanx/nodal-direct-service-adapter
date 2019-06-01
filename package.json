@@ -1,0 +1,15 @@
+{
+  "name": "nodal-direct-service-adapter",
+  "version": "0.1.0",
+  "description": "Adapter to expose a Nodal service for in-process invocation",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "https://github.com/evanx",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "jest": "^24.8.0"
+  }
+}
