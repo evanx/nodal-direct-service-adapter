@@ -4,7 +4,8 @@
   "description": "Adapter to expose a Nodal service for in-process invocation",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "author": "https://github.com/evanx",
   "license": "ISC",
