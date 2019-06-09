@@ -48,26 +48,6 @@ exports.get = async id => {
   return cache.get(id)
 }
 
-exports.find = async fn => {
-  const iter = cache.entries()
-  return {
-    next: () => {
-      while (true) {
-        const { done, value } = iter.next()
-        if (done) {
-          if (value !== undefined && fn(value)) {
-            return { done, value }
-          } else {
-            return { done }
-          }
-        } else if (fn(value)) {
-          return { done, value }
-        }
-      }
-    },
-  }
-}
-
 exports.remove = async id => {
   if (!cache.has(id)) {
     throw new NotFound(`Cannot find ${resourceType} with id: ${id}`)
@@ -97,4 +77,24 @@ exports.update = async (id, data) => {
   const result = Object.assign(stored, data)
   cache.set(id, result)
   return result
+}
+
+exports.find = async fn => {
+  const iter = cache.entries()
+  return {
+    next: () => {
+      while (true) {
+        const { done, value } = iter.next()
+        if (done) {
+          if (value !== undefined && fn(value)) {
+            return { done, value }
+          } else {
+            return { done }
+          }
+        } else if (fn(value)) {
+          return { done, value }
+        }
+      }
+    },
+  }
 }

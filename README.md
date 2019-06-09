@@ -1,11 +1,12 @@
 # nodal-mlk
 
-We propose a convention for declaring a Node service to achieve:
+We propose a convention for declaring a Node service to:
 
-- a documented API with examples
-- test coverage via the examples
-- enable simple services within a monolith
-- enable reconfiguration as distributed microservices
+- provide a documented API with examples
+- ensure test coverage via the examples
+- support simple services within a monolith
+- ease reconfiguration as distributed microservices
+- support middleware for common concerns e.g. authorisation, tracing, caching
 
 ## Status
 
