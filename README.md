@@ -89,6 +89,6 @@ exports.expect = async state => {
 ## Status
 
 - test runner - WIP June 2019
-- HTTP adapter - TBD
-- NATS adapter - TBD
-- GraphQL adapter - TBD
+- HTTP adapter - TBD June 2019
+- NATS adapter - TBD July 2019
+- GraphQL adapter - TBD August 2019
