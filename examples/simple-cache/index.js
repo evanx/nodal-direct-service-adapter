@@ -1,19 +1,21 @@
 const assert = require('assert')
 const { NotFound, Conflict } = require('@feathersjs/errors')
-const cache = new Map()
-const config = {
-  resourceName: 'Example',
-}
 const { createId } = require('../../utils')
 
-exports.key = 'simpleCache'
+const config = {
+  resourceType: 'item',
+}
+const cache = new Map()
 
 exports.endpoints = require('./endpoints')
+exports.key = 'simpleCache'
 
-exports.setup = async config => {
+exports.configure = async conf => Object.assign(config, conf)
+
+exports.setup = async state => {
   cache.clear()
-  assert(Array.isArray(config.cache), 'cache')
-  config.cache.forEach(item => {
+  assert(Array.isArray(state.cache), 'cache')
+  state.cache.forEach(item => {
     assert.strictEqual(typeof item, 'object', 'item')
     assert.strictEqual(typeof item.id, 'string', 'id')
     cache.set(item.id, item)
@@ -34,13 +36,12 @@ exports.expect = async state => {
 
 exports.clear = async () => {
   cache.clear()
-  console.log('clear', cache.size)
 }
 
 exports.get = async id => {
   assert(id, 'id')
   if (!cache.has(id)) {
-    throw new NotFound(`Cannot find ${config.resourceName} with id: ${id}`)
+    throw new NotFound(`Cannot find ${config.resourceType} with id: ${id}`)
   }
   return cache.get(id)
 }
@@ -67,7 +68,7 @@ exports.find = async fn => {
 
 exports.remove = async id => {
   if (!cache.has(id)) {
-    throw new NotFound(`Cannot find ${config.resourceName} with id: ${id}`)
+    throw new NotFound(`Cannot find ${resourceType} with id: ${id}`)
   }
   return cache.delete(id)
 }
@@ -81,7 +82,7 @@ exports.create = async data => {
   const { id } = data
   if (cache.has(id)) {
     throw new Conflict(
-      `Cannot create ${config.resourceName} as already exists: ${id}`,
+      `Cannot create ${config.resourceType} as already exists: ${id}`,
     )
   }
   cache.set(id, data)
