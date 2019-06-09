@@ -17,19 +17,19 @@ Consider an in-memory caching service:
 
 ```
 const cache = new Map()
-...
+
 exports.remove = async id => {
   if (!cache.has(id)) {
-    throw new NotFound(`Cannot find ${config.resourceName} with id: ${id}`)
+    throw new NotFound(id)
   }
   return cache.delete(id)
 }
 ```
 
-We declare `examples`
+We declare `examples` for each function:
 
 ```
-module.exports = {
+exports.endpoints = {
   remove: {
     examples: {
       test1: {
@@ -37,12 +37,11 @@ module.exports = {
       },
     },
   },
-  ...
 ```
 
 #### Setup and expect
 
-Consider the following example to `clear` the cache:
+Consider the following example to `remove` an item from the cache:
 
 ```
   remove: {
@@ -69,25 +68,7 @@ Consider the following example to `clear` the cache:
 
 Our automated test runner will invoke `setup` and `expect` on the service using the above declarations.
 
-```
-exports.setup = async config => {
-  cache.clear()
-  config.cache.forEach(item => {
-    cache.set(item.id, item)
-  })
-}
-
-exports.expect = async state => {
-  state.cache.forEach(item => {
-    const value = cache.get(item.id)
-    assert.deepStrictEqual(item, value, item.id)
-  })
-}
-```
-
-#### Expect
-
-where our service must implement `setup` and `expect` functions to facilitate tests:
+These functions are implemented in our Simple Cache service as follows:
 
 ```
 exports.setup = async config => {
@@ -105,4 +86,9 @@ exports.expect = async state => {
 }
 ```
 
-When the exer
+## Status
+
+- test runner - WIP June 2019
+- HTTP adapter - TBD
+- NATS adapter - TBD
+- GraphQL adapter - TBD
