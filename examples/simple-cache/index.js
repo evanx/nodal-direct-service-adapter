@@ -5,9 +5,11 @@ const { createId } = require('../../utils')
 const config = {
   resourceType: 'item',
 }
+
 const cache = new Map()
 
 exports.endpoints = require('./endpoints')
+
 exports.key = 'simpleCache'
 
 exports.configure = async conf => Object.assign(config, conf)
