@@ -50,7 +50,7 @@ exports.get = async id => {
 
 exports.remove = async id => {
   if (!cache.has(id)) {
-    throw new NotFound(`Cannot find ${resourceType} with id: ${id}`)
+    throw new NotFound(`Cannot find ${config.resourceType} with id: ${id}`)
   }
   return cache.delete(id)
 }
