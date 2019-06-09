@@ -1,19 +1,22 @@
 # nodal-mlk
 
-We propose a convention for declaring a Node service to:
+We propose a convention for declaring a modular Node service to:
 
 - provide a documented API with examples
 - ensure test coverage via the examples
 - support simple services within a monolith
 - ease reconfiguration as distributed microservices
-- support middleware for common concerns e.g. authorisation, tracing, caching
+- support middleware for common concerns e.g. authorisation, monitoring, caching
 
 ## Status
 
 - test runner - WIP June 2019
+- monitoring - TBD
+- authorisation - TBD
+- caching - TBD
 - HTTP adapter - TBD June 2019
-- NATS adapter - TBD July 2019
-- GraphQL adapter - TBD August 2019
+- NATS adapter - TBD
+- GraphQL adapter - TBD
 
 ## Examples
 
