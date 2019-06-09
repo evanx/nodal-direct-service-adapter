@@ -7,6 +7,13 @@ We propose a convention for declaring a Node service to achieve:
 - enable simple services within a monolith
 - enable reconfiguration as distributed microservices
 
+## Status
+
+- test runner - WIP June 2019
+- HTTP adapter - TBD June 2019
+- NATS adapter - TBD July 2019
+- GraphQL adapter - TBD August 2019
+
 ## Examples
 
 ### Simple cache
@@ -41,6 +48,25 @@ exports.endpoints = {
 
 #### Setup and expect
 
+To facilitate testing, we implement `setup` and `expect` on our Simple Cache service:
+
+```
+exports.setup = async config => {
+  cache.clear()
+  config.cache.forEach(item => {
+    cache.set(item.id, item)
+  })
+}
+
+exports.expect = async state => {
+  assert.strictEqual(cache.size, state.cache.length, 'cache.size')
+  state.cache.forEach(item => {
+    const value = cache.get(item.id)
+    assert.deepStrictEqual(item, value, item.id)
+  })
+}
+```
+
 Consider the following example to `remove` an item from the cache:
 
 ```
@@ -68,27 +94,5 @@ Consider the following example to `remove` an item from the cache:
 
 Our automated test runner will invoke `setup` and `expect` on the service using the above declarations.
 
-These functions are implemented in our Simple Cache service as follows:
-
-```
-exports.setup = async config => {
-  cache.clear()
-  config.cache.forEach(item => {
-    cache.set(item.id, item)
-  })
-}
-
-exports.expect = async state => {
-  state.cache.forEach(item => {
-    const value = cache.get(item.id)
-    assert.deepStrictEqual(item, value, item.id)
-  })
-}
-```
-
-## Status
-
-- test runner - WIP June 2019
-- HTTP adapter - TBD June 2019
-- NATS adapter - TBD July 2019
-- GraphQL adapter - TBD August 2019
+--
+https://twitter.com/evanxsummers
