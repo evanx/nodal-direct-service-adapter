@@ -96,7 +96,7 @@ Consider the following example to `remove` an item from the cache:
   },
 ```
 
-Our automated test runner will invoke `setup` and `expect` on the service using the above declarations.
+Our automated test runner will invoke `setup` and finally `expect` on the service using the above declarations e.g. for the contents of the `cache` and the `id` to `remove.`
 
 --
 https://twitter.com/evanxsummers
